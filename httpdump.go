@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/google/gopacket/layers"
 	"net/http"
+	"os"
 	"regexp"
 	"strings"
 
@@ -33,10 +34,16 @@ func main() {
 	var port = flag.String("port", "", "src port or dst port")
 	var path = flag.String("path", "", "url request path")
 
+	//flag.Usage= func() {
+	//	fmt.Println("capture http packge")
+	//}
 	flag.Parse()
+
+
 	handle, err := pcap.OpenLive(*dev, 1600, true, pcap.BlockForever)
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 	defer handle.Close()
 
